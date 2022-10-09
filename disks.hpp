@@ -112,7 +112,15 @@ public:
   // Return true when this disk_state is fully sorted, with all light disks on
   // the left (low indices) and all dark disks on the right (high indices).
   bool is_sorted() const {
-      
+    // This loops through the whole list at O(n) complexity
+    for (size_t i = 0; i < total_count() / 2; i++) {
+      // Now we want to iterate over the list and see if the first half is all light
+      if (i < total_count() / 2) {
+        if (_colors[i] == DISK_DARK) {
+          return false;
+        }
+      }
+    }
       return true;
   }
 };
@@ -145,17 +153,40 @@ public:
 // Algorithm that sorts disks using the alternate algorithm.
 sorted_disks sort_alternate(const disk_state& before) {
 	int numOfSwap = 0;                                                                      //record # of step swap
- 
-          }
+  // Initializing another disk state will allow us to work an a list identical to before
+  disk_state after = before;
+  // The below loop will cover all light disks at O(n) complexity
+  for (size_t i = 0; i < after.total_count() / 2; i++) {
+    // Iterates for every light in the list at O(n) complexity
+    for (size_t j = i; j < after.total_count() - 1; j++) {
+      // Swap if it goes dark(1), then light(0)
+      if (after.get(j) > after.get(j + 1)) {
+        after.swap(j);
+        numOfSwap++;
+      }
+    }
+  }
 
-  return sorted_disks(disk_state(state), numOfSwap);
+  return sorted_disks(disk_state(after), numOfSwap);
 }
 
 
 // Algorithm that sorts disks using the lawnmower algorithm.
 sorted_disks sort_lawnmower(const disk_state& before) {
-  	
-	  }
+  int numOfSwap = 0;
+  disk_state after = before;
 
-  return sorted_disks(disk_state(state), numOfSwap);
+  // Loop over the entire list at O(n) complexity
+  for (size_t i = 0; i < after.total_count() - 1; i++) {
+    // Loop left-to-right and right-to-left over the list at O(n) complexity
+    for (size_t j = 1; j < after.total_count() - 1; j++) {
+      // Swap if it goes dark(1), then light(0), but account for going both directions
+      if (after.get(j) > after.get(j + 1)) {
+        after.swap(j);
+        numOfSwap++;
+      }
+    }
+  }
+
+  return sorted_disks(disk_state(after), numOfSwap);
 }
