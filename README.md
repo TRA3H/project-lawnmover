@@ -2,6 +2,6 @@
 CPSC 335 Project 1
 
 # Group: 
-Cyrus Baybay
+Cyrus Baybay<br>
 Hunter Bendel
 <br>
