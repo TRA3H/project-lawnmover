@@ -1,5 +1,7 @@
 # project-lawnmover
+CPSC 335 Project 1
 
-#Group:
+# Group: 
 Cyrus Baybay
 Hunter Bendel
+<br>
